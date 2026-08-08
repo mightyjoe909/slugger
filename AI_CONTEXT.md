@@ -187,8 +187,9 @@ implementation changes are authorized. Install the checked-in test toolchain wit
 pip install -c constraints-ci.txt -e ".[test]"
 ```
 
-The checked-in CI defines these locally supported checks; run all applicable checks
-and the full suite when a task's risk or removal policy requires it:
+Run the CI-configured checks below, and run additional local checks (for example,
+`pytest tests/` and `git diff --check`) when a task's risk or removal policy
+requires broader validation:
 
 ```bash
 ruff check .
