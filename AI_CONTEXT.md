@@ -114,31 +114,58 @@ Read in this order, going deeper where the proposed change touches the subject:
    proves current capability. Use the root [README](README.md) for repository
    orientation only where it agrees with higher-authority sources.
 
-## Implementation authority and compatibility policy
+## Implementation authority and convergence policy
 
-- This project is pre-production, has one current user, and currently has **no
-  backward-compatibility requirement**.
-- Existing implementation is a blueprint, not product authority. Reuse an artifact
-  only when it conforms to the approved requirements and design.
-- Later implementation tasks may modify, replace, or remove conflicting,
-  duplicated, obsolete, or out-of-scope code, workflows, schemas, tests, fixtures,
-  packages, and examples. Git history preserves removed implementation and is the
-  recovery mechanism for historical behavior.
-- The organization supports **exactly one active cross-repository contract and one
-  current execution path**. For this repository, the locally documented current
-  interface is the immutable organization release 2.2.0 pin and its single
-  `ai-sdlc-contract/v2` payload shape described in the next-MVP baseline. Local
-  interfaces must conform to that organization-owned contract; local summaries or
-  schemas cannot replace it.
-- Earlier contract shapes, compatibility adapters, legacy aliases, migration
-  layers, dual-schema validation, obsolete workflow inputs, and fallback interfaces
-  must not be preserved unless a future approved requirement explicitly requires
-  them. A version or discriminator may identify the one current payload shape; its
-  presence does not require support for earlier versions.
-- Do not treat the historical user-generation, certification, release, experimental
+This section governs every implementation task. The approved product
+[vision](docs/VISION.md), [requirements baseline](docs/requirements/README.md),
+[architecture and design](docs/architecture/README.md),
+[ADRs](docs/architecture/ADR.md), and
+[organization next-MVP baseline](docs/next-mvp.md) are authoritative. Their stated
+status and the authority hierarchy above still apply; this policy does not promote
+draft, historical, experimental, deferred, or externally blocked material.
+
+- Existing source code, workflows, schemas, tests, fixtures, packages, prompts,
+  examples, and release artifacts are implementation blueprints or evidence—not
+  requirements or architectural authority. Reuse them only where they conform to
+  the authoritative documentation.
+- An implementation artifact may be modified, replaced, or deleted when it
+  conflicts with authoritative documentation. Later scoped tasks should remove
+  conflicting, duplicated, obsolete, and out-of-scope implementation rather than
+  treating current behavior as a constraint. Git history, release records, and
+  ADRs—not live compatibility code—preserve historical behavior and decisions.
+- There is no current backward-compatibility requirement. Do not preserve
+  deprecated execution paths, duplicate contracts, wrappers, aliases, shims,
+  transitional structures, fallback interfaces, dual-schema validation, or
+  obsolete workflow inputs unless an authoritative requirement explicitly requires
+  them.
+- Converge on **one supported MVP contract and one active implementation path for
+  each responsibility**. For this repository, the documented contract shape is
+  organization release 2.2.0's `ai-sdlc-contract/v2` at the immutable pin in the
+  next-MVP baseline. It remains externally owned and non-live while the documented
+  receiver and registry blockers remain. Local summaries or schemas cannot replace
+  it, and a version discriminator does not imply support for older versions.
+- Do not treat historical user-generation, certification, release, experimental
   full-SDLC, or diagnostic paths as additional active organization execution paths.
-- This documentation task authorizes no deletion, contract change, workflow change,
-  or product implementation. Artifact disposition belongs to a later scoped task.
+  Their existence does not broaden the next-MVP responsibility or preserve an
+  alternate contract.
+- Do not infer behavior, schemas, compatibility, authority, availability, or
+  readiness from a sibling repository. Cross-repository assumptions may come only
+  from explicit, versioned interface or release documents present in this
+  repository and must retain their documented external/unverified status.
+- Do not invent missing requirements, architecture, fixtures, credentials,
+  ownership, or external behavior. Fail closed when safe behavior is defined;
+  otherwise report the missing external dependency as a blocker to the affected
+  implementation or readiness claim.
+- Keep MVP scope narrow. Automation stops at a validated managed draft PR or a
+  no-change, rejection, or failure result. It performs no automatic merge,
+  deployment, production operation, autonomous approval, or production-readiness
+  determination or claim.
+- Before every implementation task, load this `AI_CONTEXT.md` completely, then
+  follow its ordered reading path, authority hierarchy, repository boundaries, and
+  task-relevant validation instructions before proposing or changing code.
+- This documentation task authorizes no runtime deletion, contract change,
+  workflow change, or product implementation. Artifact disposition belongs to a
+  later scoped implementation task.
 
 ## MVP boundaries
 
