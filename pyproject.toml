@@ -21,9 +21,6 @@ test = [
   "mypy>=1.11.0",
 ]
 
-[project.scripts]
-slugger = "cli.main:main"
-
 [tool.setuptools.packages.find]
 include = [
   "agents*", "benchmarks*", "cli*", "config*", "core*", "docs*", "knowledge*",
