@@ -4,13 +4,13 @@
 
 | Included requirements | Design/interface realization | Required conformance evidence |
 |---|---|---|
-| FR-INT-01, FR-INT-02, FR-CAT-01 | IF-01/IF-04; ADR-009/ADR-013; exact `execution_input_json` plus `concurrency_group` | valid verify, wrong target, disabled target, unsupported version, malformed input, unauthorized caller, unsupported task type, invalid concurrency group |
+| FR-INT-01, FR-INT-02, FR-CAT-01 | IF-01/IF-04; ADR-009/ADR-013; exact `execution_input_json` plus `concurrency_group` | valid verify, wrong target, router-side disabled-target nondispatch, unsupported version, malformed input, unauthorized caller, unsupported task type, invalid concurrency group |
 | FR-RUN-01, FR-IDM-01 | coordinator, IF-11/IF-12; ADR-003/ADR-007; `delivery_id` identity | duplicate delivery, changed payload under delivery ID, identical/conflicting result redelivery |
 | FR-WS-01, FR-PRV-01 | workspace/Codex ports; ADR-004/ADR-008 | fake implement, verify-no-call, outside-scope denial and network trap |
 | FR-VAL-01, FR-TST-01, FR-EVD-01 | validation/evidence adapters; ADR-004/ADR-006/ADR-011 | deterministic pass/fail evidence and safe-error fixtures |
 | FR-PUB-01, FR-PUB-02 | GitHub publication adapter/IF-12; `ai-sdlc-delivery-id`; ADR-007/ADR-013 | matching draft reuse, ambiguous ownership, create-race requery, publication failure, no real branch/PR |
 | FR-ERR-01, FR-RES-01 | IF-02; pinned result schema; pinned receiver | fake Codex/validation/test/publication failures, valid canonical result, receiver fail-closed response and result redelivery |
-| FR-CNF-01 | fake executor/publisher; ADR-014; `TC-MVP-CI-001` plan | no Codex network call and no real branch/PR; no full shared-fixture claim until external fixtures are complete |
+| FR-CNF-01 | fake executor/publisher; ADR-014; `TC-MVP-CI-001` plan | no Codex network call and no real branch/PR; executable shared-fixture conformance with zero real external effects |
 
 The exact included IDs are **FR-INT-01, FR-INT-02, FR-CAT-01, FR-RUN-01,
 FR-WS-01, FR-PRV-01, FR-ART-01, FR-VAL-01, FR-DEP-01, FR-EXE-01,

@@ -1,6 +1,6 @@
 # Slugger Production Readiness
 
-> This is longer-term product material, not a claim that the organization next MVP is production-ready. The next MVP stops at a validated managed draft PR and canonical result and remains blocked on the gates in [`docs/next-mvp.md`](next-mvp.md#external-validation-gates).
+> This is longer-term product material, not a claim that the organization next MVP is production-ready. The next MVP stops at a validated managed draft PR and canonical result and remains blocked on the gates in [`docs/next-mvp.md`](next-mvp.md#external-dependencies-limitations-and-readiness).
 
 ## Canonical execution path
 

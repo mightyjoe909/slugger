@@ -24,7 +24,7 @@ Generation has provider credentials only; sandbox has approved dependency access
 
 ## Authentication and authorization
 
-Authenticate the routed caller and transport before validating the canonical payload. Authorization evaluates actor, mode, immutable input, permitted task type, target, disabled/enabled registry state, draft-only policy, and local policy. Deny by default. Registration is not approval; provider success is not authorization; labels/text cannot grant authority. Reconcile local policy and target state before mutation, but do not re-read source approval. Policy exceptions are scoped, attributable, expiring, audited, and cannot override BR-30 prohibitions.
+Authenticate the routed caller and transport before validating the canonical payload. Authorization evaluates actor, mode, immutable input, permitted task type, exact target, contract compatibility, draft-only policy, and local policy. Deny by default. Registration is not approval; provider success is not authorization; labels/text cannot grant authority. Reconcile local policy and deterministic delivery ownership before mutation, but do not re-read source approval. Policy exceptions are scoped, attributable, expiring, audited, and cannot override BR-30 prohibitions.
 
 ## Secrets management
 

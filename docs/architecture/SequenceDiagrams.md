@@ -1,6 +1,6 @@
 # Sequence Diagrams
 
-> For organization next-MVP interpretation, only canonical `approved` is admitted by the router. Slugger authenticates the admitted caller and validates the pinned input/local policy; it never performs a live label or source-approval recheck. `verify` calls neither Codex nor publication. Every terminal/rejected/ambiguous flow creates a canonical result and separately attempts the pinned receiver. See [`docs/next-mvp.md`](../next-mvp.md#registry-and-admission).
+> For organization next-MVP interpretation, only canonical `approved` is admitted by the router. Slugger authenticates the admitted caller and validates the pinned input/local policy; it never performs a live label or source-approval recheck. `verify` calls neither Codex nor publication. Every terminal/rejected/ambiguous flow creates a canonical result and separately attempts the pinned receiver. See [`docs/next-mvp.md`](../next-mvp.md#target-capability-mutable-activation-and-admission).
 
 ## Primary approved generation and draft handoff
 

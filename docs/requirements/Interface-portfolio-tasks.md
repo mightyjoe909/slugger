@@ -1,6 +1,6 @@
 # Interface Contract — `Young-Consultations/portfolio-tasks`
 
-> **Next-MVP authority correction:** This sibling repository was not inspected. Only canonical `approved` is admitted by the organization router; `queued` is not authorization. Material changes receive a new `task_id` and require new approval. Slugger trusts neither a mutable label nor a live source recheck as a second authority, and rich approval provenance is deferred to v3. See [`docs/next-mvp.md`](../next-mvp.md#registry-and-admission).
+> **Next-MVP authority correction:** This sibling repository was not inspected. Only canonical `approved` is admitted by the organization router; `queued` is not authorization. Material changes receive a new `task_id` and require new approval. Slugger trusts neither a mutable label nor a live source recheck as a second authority, and rich approval provenance is deferred to v3. See [`docs/next-mvp.md`](../next-mvp.md#target-capability-mutable-activation-and-admission).
 
 ## Purpose and responsibilities
 

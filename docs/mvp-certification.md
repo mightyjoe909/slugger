@@ -1,4 +1,4 @@
-> **Historical certification evidence only.** These v0.1.x records do not certify the organization next MVP, its external contract, authorization semantics, target-registry enablement, canonical results, or hermetic conformance suite. Use [`docs/next-mvp.md`](next-mvp.md#repository-readiness-checklist) for current exit gates.
+> **Historical certification evidence only.** These v0.1.x records do not certify the organization next MVP, its external contract, authorization semantics, target-registry enablement, canonical results, or hermetic conformance suite. Use [`docs/next-mvp.md`](next-mvp.md#external-dependencies-limitations-and-readiness) for current exit gates.
 
 ## Project status for v0.1.2
 

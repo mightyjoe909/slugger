@@ -48,7 +48,10 @@ jobs:
             constraints-ci.txt
       - run: python -m pip install --upgrade pip
       - run: pip install -c constraints-ci.txt -e ".[test]"
-      - run: python -m pytest tests/test_next_mvp_convergence.py -q
+      - run: |
+          python -m pytest tests/test_next_mvp_convergence.py -q
+          python -m pytest tests/test_target_adapter_contract.py tests/test_target_adapter_ownership.py tests/test_target_adapter_execution.py -q
+          python -m pytest tests/conformance/test_tc_mvp_ci_001.py -q
 
   package-verification:
     name: Package verification

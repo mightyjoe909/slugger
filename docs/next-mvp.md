@@ -1,7 +1,7 @@
 # Slugger organization next-MVP target adapter
 
-**Status:** implementation-ready interface baseline; the adapter is not implemented,
-enabled, or certified. This document is authoritative for Slugger's current
+**Status:** the target adapter is implemented against this interface baseline but is
+not enabled or certified. This document is authoritative for Slugger's current
 organization-MVP slice. The broader product vision remains in [`VISION.md`](VISION.md).
 
 ## Immutable compatibility unit
@@ -11,7 +11,7 @@ version **`ai-sdlc-contract/v2`**, and fixture set **`TC-MVP-CI-001`** at this e
 immutable reference:
 
 ```text
-Young-Consultations/.github@f2491872976a4dcc1633997954c03c07cbc4fced
+Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e
 ```
 
 The authoritative release manifest, compatibility and release documentation,
@@ -23,9 +23,9 @@ The canonical schemas are consumed directly from these immutable files; summarie
 in Slugger documentation are subordinate to them:
 
 ```text
-https://raw.githubusercontent.com/Young-Consultations/.github/f2491872976a4dcc1633997954c03c07cbc4fced/contracts/task-contract.schema.json
-https://raw.githubusercontent.com/Young-Consultations/.github/f2491872976a4dcc1633997954c03c07cbc4fced/contracts/execution-input.schema.json
-https://raw.githubusercontent.com/Young-Consultations/.github/f2491872976a4dcc1633997954c03c07cbc4fced/contracts/execution-result.schema.json
+https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/task-contract.schema.json
+https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-input.schema.json
+https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-result.schema.json
 ```
 
 There is no assumed published package, no `ai-sdlc-v2.2.0` tag, no `main`
@@ -67,14 +67,13 @@ orchestration, a full autonomous SDLC, cross-repository modification, automatic
 merge, release, deployment, production operations, provider substitution, and rich
 v3 approval provenance are future capabilities, not this MVP.
 
-## Registry and admission
+## Target capability, mutable activation, and admission
 
-The supplied organization registry entry is:
+The immutable compatibility unit declares Slugger's stable target capability:
 
 | Field | Required value |
 |---|---|
 | target | `Young-Consultations/slugger` |
-| enabled | `false` |
 | permitted task types | `automation`, `bug-fix`, `documentation`, `feature`, `testing` |
 | contract | `ai-sdlc-contract/v2` |
 | draft_pr_only | `true` |
@@ -82,17 +81,22 @@ The supplied organization registry entry is:
 | ownership_marker | `ai-sdlc-delivery-id` |
 | terminal_reuse_status | `duplicate-reused` |
 
-The adapter **must fail closed while `enabled` is false**. Documentation alignment
-and a local implementation using fakes may proceed, but live routed execution may
-not. Enablement remains an organization-owned external decision.
+Target capability is immutable compatibility semantics; it is not current operational
+activation state. Current activation is mutable organization control-plane state,
+owned and enforced by the router before dispatch. Slugger does not read, pin, or
+enforce historical enabled/disabled state from this compatibility revision and must
+not reject a valid admitted request because this revision predates activation. This
+repository does not enable Slugger; activation remains a separate organization-owned
+operational decision.
 
 Only canonical task status `approved` is admitted by the router. `queued` is not
 authorization. Material change creates a new `task_id` and requires new approval.
 The router's admitted call—not a mutable target-side label—is the organization
 authorization presented to Slugger. Slugger authenticates the caller and validates
-the admitted payload and local policy; it does **not** re-read the live source issue,
-require `ai-sdlc-approved`, require a second approval record, or act as an approval
-authority. Rich approval provenance is explicitly deferred to v3.
+the admitted payload, exact target, compatibility, capability, and local policy; it
+does **not** re-read the live source issue, re-evaluate activation, require
+`ai-sdlc-approved`, require a second approval record, or act as an approval authority.
+Rich approval provenance is explicitly deferred to v3.
 
 ## Exact reusable-workflow input
 
@@ -155,12 +159,12 @@ validation/tests must pass first. The adapter never operates on another reposito
 and never marks ready, approves, merges, releases, deploys, or performs production
 operations.
 
-## Result-receiver interface, current pin, and release transition
+## Canonical result-receiver interface
 
-The release-2.2.0 baseline identifies this **current, non-live** receiver pin:
+The compatibility baseline pins the implemented canonical receiver at:
 
 ```text
-Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@f2491872976a4dcc1633997954c03c07cbc4fced
+Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@c6090e5bbadcc2102a1cb91875466e9decdada1e
 ```
 
 | Direction | Name |
@@ -175,50 +179,37 @@ Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@f2491872
 | output | `failure_category` |
 | output | `diagnostic_summary` |
 
-The receiver at that SHA is an approved **fail-closed interface skeleton and is
-not implemented**. It is suitable only for alignment and fail-closed conformance;
-it is not the pin that a live-capable Slugger release will invoke. Slugger must not
-create a competing receiver. Its secret is used only at the result-delivery
-boundary and is not a control-plane credential. Receiver transport acknowledgement
-means only that transport accepted the payload; it is not execution success and
-cannot alter the canonical execution truth. Identical result redelivery must be
-safe; a conflicting result under the same identity must fail closed.
+Slugger invokes this receiver rather than creating a competing result path. Its
+secret is introduced only at the result-delivery boundary and is never available to
+Codex, candidate validation, or target publication. Receiver acknowledgement means
+only that transport accepted the payload; it is not execution success and cannot
+alter canonical execution truth. Identical result redelivery is safe; a conflicting
+result under the same identity fails closed. Receiver transport failure preserves
+the already determined execution result for safe redelivery.
 
-Successful live result delivery becomes reachable only through a coordinated
-organization release and Slugger pin update. The organization owner must first
-implement and test this workflow, publish a new immutable full commit SHA containing
-that implementation, and include that SHA in a new approved control-plane release.
-Slugger must then replace the receiver `uses:` reference above with that new SHA,
-update the documented control-plane release/SHA baseline, and pass receiver
-contract, authentication, identical-redelivery, conflicting-redelivery, and failure
-tests against the new revision before the registry entry may be enabled. The
-implemented receiver SHA must differ from
-`f2491872976a4dcc1633997954c03c07cbc4fced`; a branch, tag, or the skeleton SHA is
-not an acceptable live receiver pin. Until the new full SHA is recorded here and in
-the adapter workflow, successful live result delivery remains unreachable and
-enablement must fail closed.
-
-## Planned no-Codex conformance
+## No-Codex conformance
 
 Normal CI will use a fake executor and fake publisher, no Codex credential or
-network call, and no real branch, commit, push, or PR. Planned cases align with the
-authoritative `TC-MVP-CI-001` manifest scenario names and coverage:
+network call, and no real branch, commit, push, or PR. Cases consume the executable
+inputs and expected results from the authoritative `TC-MVP-CI-001` manifest scenario names and coverage:
 
-| Area | Planned cases |
+| Area | Cases |
 |---|---|
 | happy paths | valid verify request; valid fake implement request; valid canonical result |
-| admission | wrong target; disabled target; unsupported contract version; malformed input; unauthorized caller; unsupported task type; invalid `concurrency_group` |
+| admission | wrong target; router-side disabled-target nondispatch; unsupported contract version; malformed input; unauthorized caller; unsupported task type; invalid `concurrency_group` |
 | idempotency | duplicate delivery; changed payload under an existing delivery ID |
 | publication | existing matching managed draft PR; ambiguous managed PR ownership; create-race requery; publication failure |
 | execution/gates | fake Codex failure; validation failure; test failure |
-| receiver/result | receiver fail-closed response; identical result redelivery; conflicting result redelivery |
+| receiver/result | receiver failure; identical result redelivery; conflicting result redelivery |
 | hermetic effects | no Codex network call in normal CI; no real branch; no real pull request |
 
-The manifest is authoritative for names and coverage, but release 2.2.0 does not
-provide separate executable inputs and expected outputs for every scenario.
-Slugger will not invent missing organization-owned fixtures and does not claim full
-shared-fixture conformance. Completion of the executable fixture release is an
-external `.github` implementation dependency.
+The compatibility unit supplies executable inputs and expected results. Slugger
+consumes that oracle without redefining its schemas, status vocabulary, fixture
+expectations, activation behavior, delivery/result identity, ownership semantics, or
+duplicate-delivery behavior. Slugger-specific policy tests remain separate from
+organization contract conformance. Normal conformance CI uses dependency-injected
+fakes and makes no real Codex call, branch, commit, push, pull request, or receiver
+mutation.
 
 ## State, sequence, security, and failures
 
@@ -238,19 +229,20 @@ outcome. Retries reuse `delivery_id`, reconcile before mutation, and never use
 Caller authentication, canonical validation, Codex, candidate validation,
 publication, and result delivery are separate trust/credential phases. Codex and
 candidate commands receive no publication or result token. Diagnostics are
-bounded and redacted. Changed-payload conflicts, invalid format, disabled registry,
-unauthorized calls, ambiguous ownership, and receiver rejection all fail closed.
+bounded and redacted. Changed-payload conflicts, invalid format, unauthorized calls,
+ambiguous ownership, and receiver rejection all fail closed.
 
 ## External dependencies, limitations, and readiness
 
-External organization-owned prerequisites are: implementation of the result
-receiver followed by the coordinated release and immutable repin described above;
-completion of executable fixtures/expected outputs for `TC-MVP-CI-001`; registry
-enablement after local evidence; and any future publication of a package, release
-artifact, or real tag (none is assumed). The immutable SHA, not a tag, is the
-present dependency.
+The organization-owned schemas, target capabilities, router, executable fixture
+oracle, result semantics, receiver, and trust boundaries are complete at the pinned
+compatibility revision. Mutable activation remains deliberately outside that
+immutable unit and outside Slugger authority. Local implementation and conformance
+evidence do not enable the target.
 
 No additional Slugger-owned requirement or architecture decision is needed before
-implementation. Slugger is **ready to begin local, disabled, no-Codex target-adapter
-implementation** against this baseline. It is not enabled, cross-repository
-conformant, or capable of successful live result delivery.
+implementation. The fail-closed placeholder has been replaced in place by one canonical adapter;
+no disabled legacy path or compatibility shim is retained.
+Slugger is **ready for the issue #114 implementation task** against this baseline.
+It is not enabled or certified merely because local implementation or conformance
+succeeds.
