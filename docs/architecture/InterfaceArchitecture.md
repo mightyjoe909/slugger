@@ -1,6 +1,6 @@
 # Interface Architecture
 
-> For the organization next MVP, IF-01, IF-02, IF-04, IF-06, IF-07, IF-10, IF-11, IF-12, IF-13, and IF-14 are active. IF-01 is required-string `execution_input_json` plus `concurrency_group`; IF-02 is canonical result delivery through the full-SHA pinned, currently unimplemented receiver. [`docs/next-mvp.md`](../next-mvp.md) is the exact release boundary.
+> For the organization next MVP, IF-01, IF-02, IF-04, IF-06, IF-07, IF-10, IF-11, IF-12, IF-13, and IF-14 are active. IF-01 is required-string `execution_input_json` plus `concurrency_group`; IF-02 is canonical result delivery through the full-SHA pinned canonical receiver. [`docs/next-mvp.md`](../next-mvp.md) is the exact release boundary.
 
 ## Universal contract rules
 

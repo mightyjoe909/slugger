@@ -7,7 +7,7 @@
 | Category | Examples | Default retry | Effect |
 |---|---|---|---|
 | Contract/Input | malformed, incomplete, unsupported major/mode | No until corrected/new approved revision | Reject before mutation |
-| Authority/Governance | unauthenticated/unauthorized caller, registry disabled, unregistered target | No until external correction | Block consequential action |
+| Authority/Governance | unauthenticated/unauthorized caller, unregistered or wrong target | No until external correction | Block consequential action |
 | Policy/Security | unsafe path/content/dependency, secret, control unavailable | No; correction creates/revalidates affected work | Fail closed, incident if disclosure |
 | Identity/Conflict | same delivery/different digest, lease/version conflict | Reconcile; semantic conflict no | Preserve state, human action if unresolved |
 | Provider | rate limit, timeout, rejection, partial/ambiguous response | Bounded only when categorized and budget permits | Never treat partial candidate as verified |

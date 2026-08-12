@@ -2,7 +2,7 @@
 
 This interface is aligned, without a cross-repository conformance claim, to
 organization release 2.2.0 at
-`Young-Consultations/.github@f2491872976a4dcc1633997954c03c07cbc4fced`, payload
+`Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e`, payload
 `ai-sdlc-contract/v2`, and fixture manifest `TC-MVP-CI-001`. See the complete
 [next-MVP baseline](../next-mvp.md).
 
@@ -16,11 +16,13 @@ payload and local policy. It is not an approval authority and must not require o
 recheck `ai-sdlc-approved`, another label, or a repository-specific approval record.
 Rich approval provenance is deferred to v3.
 
-The supplied registry entry targets `Young-Consultations/slugger`, is
-`enabled: false`, permits `automation`, `bug-fix`, `documentation`, `feature`, and
-`testing`, requires `ai-sdlc-contract/v2` and `draft_pr_only: true`, and declares
-`delivery_id`, `ai-sdlc-delivery-id`, and `duplicate-reused` as branch identity,
-ownership marker, and terminal reuse status. Slugger fails closed while disabled.
+The immutable target-capability entry targets `Young-Consultations/slugger`,
+permits `automation`, `bug-fix`, `documentation`, `feature`, and `testing`, requires
+`ai-sdlc-contract/v2` and `draft_pr_only: true`, and declares `delivery_id`,
+`ai-sdlc-delivery-id`, and `duplicate-reused` as branch identity, ownership marker,
+and terminal reuse status. Capability does not encode current activation. Mutable
+enabled/disabled state is router-owned and enforced before dispatch; Slugger does
+not consume or enforce historical activation state from the compatibility pin.
 
 ## Inbound reusable-workflow contract
 
@@ -35,7 +37,7 @@ credentials are part of the target contract. `concurrency_group` is validated an
 used, but `delivery_id` is the only idempotency key; retries retain it.
 
 Slugger validates with format checking against the immutable schema at
-`https://raw.githubusercontent.com/Young-Consultations/.github/f2491872976a4dcc1633997954c03c07cbc4fced/contracts/execution-input.schema.json`.
+`https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-input.schema.json`.
 It likewise consumes the pinned `task-contract.schema.json` and
 `execution-result.schema.json` directly. Slugger defines no local canonical enum,
 schema fork, or extension, and assumes no published package.
@@ -46,16 +48,16 @@ Slugger validates canonical `execution-result/v2`, preserves the input
 `delivery_id`, `correlation_id`, and target, and separately calls:
 
 ```text
-Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@f2491872976a4dcc1633997954c03c07cbc4fced
+Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@c6090e5bbadcc2102a1cb91875466e9decdada1e
 ```
 
 The receiver inputs are `execution_result` and `source_issue`; its secret is
 `CODEX_RESULT_TOKEN`; its outputs are `accepted`, `delivery_id`, `correlation_id`,
-`execution_status`, `failure_category`, and `diagnostic_summary`. It is currently an
-approved fail-closed, unimplemented skeleton. Successful live result delivery is
-therefore impossible today. Its implementation is an organization-owned external
-dependency; Slugger must not build a competing receiver. Transport acknowledgement
-is not execution success.
+`execution_status`, `failure_category`, and `diagnostic_summary`. It is the
+organization-owned implemented receiver for this compatibility baseline. Slugger
+must not build a competing receiver. Transport acknowledgement is not execution
+success, receiver credentials remain isolated to result delivery, and failed
+transport preserves the immutable canonical result for safe redelivery.
 
 ## Delivery, publication, and failures
 
@@ -71,10 +73,12 @@ canonical result when trusted identity is available. Identical result redelivery
 safe; conflicting redelivery fails closed. No target operation merges, releases,
 deploys, performs production operations, or touches another repository.
 
-## Version and limitations
+## Version, activation, and conformance
 
-All workflow and schema references use the full SHA. `main`, the nonexistent
-`ai-sdlc-v2.2.0` tag, and an assumed package are prohibited dependencies. The
-fixture manifest supplies authoritative scenario names/coverage, not complete
-executable cases. Missing fixtures/expected outputs, receiver implementation, and
-registry enablement remain external dependencies.
+All workflow and schema references use the full SHA. `main`, a mutable tag, and an
+assumed package are prohibited dependencies. `TC-MVP-CI-001` supplies executable
+inputs and expected results and remains the semantic oracle; Slugger-specific tests
+may extend local policy coverage but cannot redefine organization expectations.
+Conformance uses fakes and creates no real Codex, branch, or pull-request effect.
+Passing conformance does not enable Slugger: mutable activation remains exclusively
+owned by the organization router.

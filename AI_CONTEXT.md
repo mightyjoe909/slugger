@@ -49,8 +49,8 @@ seek accountable resolution. Do not infer a resolution from existing code.
 boundary. For the current organization next-MVP slice, it accepts one admitted
 task, validates and executes it within this repository, produces at most one
 validated Slugger-managed draft pull request for a qualifying implement request,
-and sends one canonical result. This is planned responsibility; the target adapter
-is not yet implemented, enabled, certified, or cross-repository conformant.
+and sends one canonical result. The target adapter implements this responsibility but is not enabled, certified, or
+cross-repository conformant.
 
 Within that slice Slugger owns local contract and policy enforcement, identity and
 candidate correlation, repository-confined execution, Codex invocation after
@@ -141,9 +141,9 @@ draft, historical, experimental, deferred, or externally blocked material.
 - Converge on **one supported MVP contract and one active implementation path for
   each responsibility**. For this repository, the documented contract shape is
   organization release 2.2.0's `ai-sdlc-contract/v2` at the immutable pin in the
-  next-MVP baseline. It remains externally owned and non-live while the documented
-  receiver and registry blockers remain. Local summaries or schemas cannot replace
-  it, and a version discriminator does not imply support for older versions.
+  next-MVP baseline. It remains externally owned; mutable target activation is
+  separately owned and enforced by the organization router before dispatch. Local summaries or schemas
+  cannot replace it, and a version discriminator does not imply support for older versions.
 - Do not treat historical user-generation, certification, release, experimental
   full-SDLC, or diagnostic paths as additional active organization execution paths.
   Their existence does not broaden the next-MVP responsibility or preserve an
@@ -184,8 +184,8 @@ does not promote them.
 
 ## Security and change boundaries
 
-- Fail closed on missing/invalid authority, unknown contract semantics, disabled
-  registration, unsafe or ambiguous state, incomplete evidence, and ownership
+- Fail closed on missing/invalid authority, unknown contract semantics, unsafe or
+  ambiguous state, incomplete evidence, and ownership
   uncertainty. Only router-admitted canonical `approved` work is authorized;
   labels, `queued`, provider output, or successful checks cannot grant approval.
 - Keep implement changes and commands repository-confined. Treat Codex output and
@@ -200,9 +200,9 @@ does not promote them.
 - Preserve repository isolation, exact candidate/evidence binding, redaction,
   deterministic delivery identity, and human product/architecture/security/review
   authority. Pre-production status and a single user do not weaken these controls.
-- Normal conformance CI must use fakes and perform no Codex network call or real
-  GitHub branch/PR mutation. The disabled external registry and fail-closed receiver
-  skeleton prohibit live routed success until their documented external gates pass.
+- Normal conformance CI must use the pinned executable oracle and fakes and perform
+  no Codex network call or real GitHub branch/PR mutation. Passing local conformance
+  does not activate Slugger; mutable activation remains organization-router state.
 
 ## Development and validation workflow
 
@@ -267,17 +267,16 @@ disposition during the relevant implementation task.
 
 ## Known gaps or conflicts
 
-- The current adapter is explicitly not implemented, enabled, or certified. The
-  organization registry is disabled, and the pinned result receiver is a
-  fail-closed skeleton. Live successful result delivery requires an externally
-  owned implemented receiver, coordinated immutable repin/release, local evidence,
-  and registry enablement.
-- `TC-MVP-CI-001` does not locally provide executable inputs and expected outputs
-  for every scenario. **FR-CNF-01** can be planned against its named coverage, but
-  full shared-fixture conformance must not be claimed or fabricated.
-- External contract files and sibling repositories are unavailable here. Their
-  documented immutable pin is the alignment target, not locally verified evidence
-  of their present state or Slugger conformance.
+- The canonical adapter is implemented but is not enabled, certified, or
+  cross-repository conformant. The former fail-closed placeholder and competing
+  noncanonical target blueprint have been removed.
+- Immutable target capability and mutable operational activation are separate.
+  Historical enabled state is not part of Slugger's compatibility pin; the router
+  owns and enforces current activation before dispatch. Local implementation and
+  conformance must not enable Slugger.
+- The pinned organization baseline supplies executable `TC-MVP-CI-001` inputs and
+  expected results plus the canonical result receiver. Slugger consumes those
+  semantics directly and must not create local substitutes.
 - [Repository context](docs/requirements/RepositoryContext.md) describes backward
   compatibility for declared windows as a general lifecycle responsibility, while
   the current pre-production policy establishes no backward-compatibility
@@ -293,8 +292,10 @@ disposition during the relevant implementation task.
   [assumptions and open questions](docs/requirements/Assumptions.md). Consult the
   owning record rather than copying that backlog here or manufacturing answers.
 
-These gaps block the affected live/conformance claims but do not block local,
-disabled, no-Codex implementation against the approved baseline.
+No organization-contract blocker remains for issue #114 implementation. Exact
+organization-owned schemas, statuses, fixture expectations, receiver semantics,
+identity, ownership, and duplicate behavior remain authoritative at the immutable
+pin and must be consumed rather than redefined.
 
 ## Maintenance rule
 

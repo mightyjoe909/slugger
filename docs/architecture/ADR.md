@@ -77,10 +77,10 @@
 ## ADR-009 — External contracts remain externally owned
 
 **Context:** Sibling implementations are unavailable and local schema copies drift.
-**Decision:** For the next MVP, consume the three canonical schema files directly from `Young-Consultations/.github@f2491872976a4dcc1633997954c03c07cbc4fced` and map through adapters; unknown major/semantics fail closed. Do not assume a package, tag, floating branch, local copy, or extension.
+**Decision:** For the next MVP, consume the three canonical schema files directly from `Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e` and map through adapters; unknown major/semantics fail closed. Do not assume a package, tag, floating branch, local copy, or extension.
 **Alternatives:** Copy schema/enums; infer fields from workflows.
 **Tradeoffs:** External availability/version coordination; preserves ownership.
-**Consequences:** Release 2.2.0 and `ai-sdlc-contract/v2` are the interface baseline; the disabled registry still blocks routed execution.
+**Consequences:** Release 2.2.0 and `ai-sdlc-contract/v2` are the interface baseline. Immutable capability does not encode current activation; the router owns mutable activation before dispatch.
 **Open questions:** Future artifact/package publication and compatibility-window policy are organization-owned.
 
 ## ADR-010 — Experimental capabilities are quarantined
@@ -114,12 +114,12 @@
 
 **Context:** Portfolio approval truth and control-plane routing are externally owned; mutable repository labels create time-of-check races and a second authority.
 **Decision:** The router admits only canonical `approved`; `queued` is not authorization, and material change requires a new `task_id` and approval. Slugger authenticates/authorizes the admitted caller and validates the immutable payload plus local policy. It never performs a target-side live label/source-issue recheck or requires `ai-sdlc-approved` or a second approval record.
-**Consequences:** Slugger is not an approval authority. Rich approval provenance is deferred to v3; unknown caller, malformed input, disabled registration, or policy uncertainty fails closed.
+**Consequences:** Slugger is not an approval authority. Rich approval provenance is deferred to v3; unknown caller, malformed input, or policy uncertainty fails closed; router-owned disabled activation prevents dispatch.
 **Open questions:** None block local next-MVP implementation.
 
 ## ADR-014 — Hermetic conformance gates external-interface changes
 
 **Context:** Real Codex and GitHub effects are unsafe, nondeterministic, and credential-dependent in normal CI.
 **Decision:** A merge-blocking suite will use the release-2.2.0 schemas and `TC-MVP-CI-001` manifest at the full immutable SHA, plus deterministic caller, executor, repository, publisher, clock, and result-sink fakes. Network/Codex and real GitHub mutations are prohibited.
-**Consequences:** Local cases may extend but not redefine the external contract. The manifest's missing executable inputs/outputs prevent a full shared-fixture claim.
-**Open questions:** Completion of the executable fixture release and required check name are organization-owned dependencies.
+**Consequences:** Local cases may extend but not redefine the external contract. The executable manifest inputs and expected results are the conformance oracle; local cases may extend but not redefine them.
+**Open questions:** The required Slugger check name remains an implementation/branch-protection coordination detail.
