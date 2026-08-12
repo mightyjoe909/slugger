@@ -9,6 +9,8 @@ def test_conformance_workflow_is_immutable_and_effect_free_by_default():
     assert "workflow_dispatch" not in text
     assert "cancel-in-progress: false" in text
     assert "CODEX_RESULT_TOKEN" in text
+    assert text.count("repository: Young-Consultations/slugger") == 3
+    assert text.count("ref: ${{ github.workflow_sha }}") == 3
 
 
 def test_no_parallel_target_workflow():
