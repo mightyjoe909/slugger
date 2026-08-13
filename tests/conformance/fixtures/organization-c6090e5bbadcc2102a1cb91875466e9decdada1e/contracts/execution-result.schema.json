@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "delivery_id", "correlation_id", "target", "execution_status", "diagnostic_summary", "branch", "pull_request_url"],
+  "properties": {
+    "contract_version": {"const": "ai-sdlc-contract/v2"},
+    "delivery_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "target": {"type": "object", "additionalProperties": false, "required": ["repository"], "properties": {"repository": {"const": "Young-Consultations/slugger"}}},
+    "execution_status": {"enum": ["verified", "succeeded", "duplicate-reused", "failed"]},
+    "diagnostic_summary": {"type": "string"},
+    "failure_category": {"enum": ["ownership", "execution", "timeout"]},
+    "branch": {"type": ["string", "null"]},
+    "pull_request_url": {"type": ["string", "null"], "format": "uri"}
+  }
+}
