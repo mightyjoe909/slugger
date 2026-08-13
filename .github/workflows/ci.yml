@@ -52,6 +52,8 @@ jobs:
           python -m pytest tests/test_next_mvp_convergence.py -q
           python -m pytest tests/test_target_adapter_contract.py tests/test_target_adapter_ownership.py tests/test_target_adapter_execution.py -q
           python -m pytest tests/conformance/test_tc_mvp_ci_001.py -q
+          python scripts/generate_conformance_report.py
+          git diff --exit-code -- artifacts/conformance/TC-MVP-CI-001-v1.md
 
   package-verification:
     name: Package verification

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "delivery_id", "correlation_id", "mode", "draft_pr_only", "target", "source", "task"],
+  "properties": {
+    "contract_version": {"const": "ai-sdlc-contract/v2"},
+    "delivery_id": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "mode": {"enum": ["verify", "implement"]},
+    "draft_pr_only": {"const": true},
+    "target": {"type": "object", "additionalProperties": false, "required": ["repository", "executor"], "properties": {"repository": {"type": "string", "minLength": 1}, "executor": {"const": "codex"}}},
+    "source": {"type": "object", "additionalProperties": false, "required": ["repository", "issue_number"], "properties": {"repository": {"type": "string", "minLength": 1}, "issue_number": {"type": "integer", "minimum": 1}}},
+    "task": {"type": "object", "additionalProperties": false, "required": ["id", "type", "instructions"], "properties": {"id": {"type": "string", "minLength": 1}, "type": {"enum": ["automation", "bug-fix", "documentation", "feature", "testing"]}, "instructions": {"type": "string", "minLength": 1}}}
+  }
+}
