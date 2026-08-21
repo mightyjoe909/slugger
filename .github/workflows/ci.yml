@@ -56,7 +56,6 @@ jobs:
             tests/test_next_mvp_convergence.py \
             tests/test_workflow_contract.py \
             tests/test_conformance.py \
-            scripts/test_codex_execute_contract.py \
             -q
       - name: Validate canonical target contract
         run: python scripts/test_codex_execute_contract.py
