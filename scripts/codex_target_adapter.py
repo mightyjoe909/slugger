@@ -660,10 +660,17 @@ esac
                 pass
         if pushed.returncode:
             stderr_text = (pushed.stderr or b"").decode("utf-8", errors="replace")
-            _NON_FAST_FORWARD = ("non-fast-forward", "fetch first", "remote rejected", "[rejected]")
+            _NON_FAST_FORWARD = (
+                "non-fast-forward",
+                "fetch first",
+                "remote rejected",
+                "[rejected]",
+            )
             if any(marker in stderr_text for marker in _NON_FAST_FORWARD):
                 raise AdapterError("publication", "create-race")
-            raise AdapterError("publication", f"push-failed: {stderr_text.strip()[:200]}")
+            raise AdapterError(
+                "publication", f"push-failed: {stderr_text.strip()[:200]}"
+            )
         body = f"<!-- {MARKER}: {delivery_id}; payload-sha256: {digest} -->\n\nAutomated draft; human review and merge are required."
         # The commit is already durable on the remote branch. Retry only PR
         # creation so a transient GitHub CLI/API failure cannot strand that
