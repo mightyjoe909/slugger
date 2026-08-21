@@ -1,10 +1,10 @@
 # Interface Contract — `Young-Consultations/.github` control plane
 
-This interface is aligned, without a cross-repository conformance claim, to
-organization release 2.2.0 at
-`Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e`, payload
-`ai-sdlc-contract/v2`, and fixture manifest `TC-MVP-CI-001`. See the complete
-[next-MVP baseline](../next-mvp.md).
+This interface is aligned to the reviewed issue #135 recovery candidate at
+`Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a`,
+payload `ai-sdlc-contract/v2`, and fixture manifest `TC-MVP-CI-001` v2.3.0.
+The final 2.3.1 release remains unpublished. See the complete [next-MVP
+baseline](../next-mvp.md).
 
 ## Ownership and authority
 
@@ -24,9 +24,10 @@ and terminal reuse status. Capability does not encode current activation. Mutabl
 enabled/disabled state is router-owned and enforced before dispatch; Slugger does
 not consume or enforce historical activation state from the compatibility pin.
 
-## Inbound reusable-workflow contract
+## Inbound target-workflow contract
 
-`.github/workflows/codex-execute.yml` must accept exactly these required strings:
+`.github/workflows/codex-execute.yml` must expose only `workflow_dispatch` and
+accept exactly these required strings:
 
 * `execution_input_json`: the complete canonical `execution-input/v2` object;
 * `concurrency_group`: the routing-path transport concurrency identity.
@@ -36,11 +37,12 @@ lookup, sibling-repository access, an undocumented module/package, nor control-p
 credentials are part of the target contract. `concurrency_group` is validated and
 used, but `delivery_id` is the only idempotency key; retries retain it.
 
-Slugger validates with format checking against the immutable schema at
-`https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-input.schema.json`.
-It likewise consumes the pinned `task-contract.schema.json` and
-`execution-result.schema.json` directly. Slugger defines no local canonical enum,
-schema fork, or extension, and assumes no published package.
+Slugger validates with format checking against the exact execution-input schema
+blob at the candidate revision. It likewise consumes byte-identical pinned
+task-contract, execution-result, manifest, scenario, and expected-result files.
+`config/mvp-conformance-pin.json` proves their upstream identities and the exact
+target implementation inputs. Slugger defines no local canonical enum, schema
+fork, or extension, and assumes no published package.
 
 ## Result contract
 
@@ -48,8 +50,11 @@ Slugger validates canonical `execution-result/v2`, preserves the input
 `delivery_id`, `correlation_id`, and target, and separately calls:
 
 ```text
-Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@c6090e5bbadcc2102a1cb91875466e9decdada1e
+Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@ai-sdlc-v2.3.1
 ```
+
+That planned tag remains unpublished. Trusted-journal-author policy is immutable
+organization-owned configuration; Slugger passes only `CODEX_RESULT_TOKEN`.
 
 The receiver inputs are `execution_result` and `source_issue`; its secret is
 `CODEX_RESULT_TOKEN`; its outputs are `accepted`, `delivery_id`, `correlation_id`,
@@ -75,10 +80,12 @@ deploys, performs production operations, or touches another repository.
 
 ## Version, activation, and conformance
 
-All workflow and schema references use the full SHA. `main`, a mutable tag, and an
-assumed package are prohibited dependencies. `TC-MVP-CI-001` supplies executable
-inputs and expected results and remains the semantic oracle; Slugger-specific tests
-may extend local policy coverage but cannot redefine organization expectations.
-Conformance uses fakes and creates no real Codex, branch, or pull-request effect.
-Passing conformance does not enable Slugger: mutable activation remains exclusively
-owned by the organization router.
+All shared schema/fixture identities use the full candidate SHA and exact Git blob
+IDs; `main`, a mutable compatibility reference, and an assumed package are
+prohibited dependencies. `TC-MVP-CI-001` supplies executable inputs and expected
+results and remains the semantic oracle; Slugger-specific tests may extend local
+policy coverage but cannot redefine organization expectations. The checked-in
+report passes 29/29 scenarios through the pinned adapter/harness, with 22 adapter
+invocations and all ten prohibited-effect counters at zero. Passing conformance
+does not enable Slugger: mutable activation remains exclusively owned by the
+organization router.

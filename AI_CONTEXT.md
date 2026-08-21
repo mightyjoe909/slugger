@@ -49,8 +49,9 @@ seek accountable resolution. Do not infer a resolution from existing code.
 boundary. For the current organization next-MVP slice, it accepts one admitted
 task, validates and executes it within this repository, produces at most one
 validated Slugger-managed draft pull request for a qualifying implement request,
-and sends one canonical result. The target adapter implements this responsibility but is not enabled, certified, or
-cross-repository conformant.
+and sends one canonical result. The issue #135 recovery candidate implements this
+responsibility and passes the complete local shared-oracle gate, but it is not
+tagged, enabled, live-receiver verified, released, or production-certified.
 
 Within that slice Slugger owns local contract and policy enforcement, identity and
 candidate correlation, repository-confined execution, Codex invocation after
@@ -140,10 +141,14 @@ draft, historical, experimental, deferred, or externally blocked material.
   them.
 - Converge on **one supported MVP contract and one active implementation path for
   each responsibility**. For this repository, the documented contract shape is
-  organization release 2.2.0's `ai-sdlc-contract/v2` at the immutable pin in the
-  next-MVP baseline. It remains externally owned; mutable target activation is
-  separately owned and enforced by the organization router before dispatch. Local summaries or schemas
-  cannot replace it, and a version discriminator does not imply support for older versions.
+  `ai-sdlc-contract/v2` plus the exact schema/fixture identities at recovery
+  candidate
+  `Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a`
+  recorded in the next-MVP baseline. It remains externally owned; checked-in
+  byte-identical files are pinned validation inputs, not a local contract fork.
+  Mutable target activation is separately owned and enforced by the organization
+  router before dispatch. A version discriminator does not imply support for older
+  versions.
 - Do not treat historical user-generation, certification, release, experimental
   full-SDLC, or diagnostic paths as additional active organization execution paths.
   Their existence does not broaden the next-MVP responsibility or preserve an
@@ -163,9 +168,9 @@ draft, historical, experimental, deferred, or externally blocked material.
 - Before every implementation task, load this `AI_CONTEXT.md` completely, then
   follow its ordered reading path, authority hierarchy, repository boundaries, and
   task-relevant validation instructions before proposing or changing code.
-- This documentation task authorizes no runtime deletion, contract change,
+- Documentation-only work authorizes no runtime deletion, contract change,
   workflow change, or product implementation. Artifact disposition belongs to a
-  later scoped implementation task.
+  separately scoped implementation task.
 
 ## MVP boundaries
 
@@ -224,6 +229,9 @@ ruff format --check .
 python -m mypy mvp cli
 python -m pytest tests/test_mvp_*.py -q
 python -m pytest tests/mvp/test_task_tracker_acceptance.py -q
+python scripts/test_codex_execute_contract.py
+python scripts/run_tc_mvp_ci_001.py
+git diff --exit-code -- .ai-sdlc/conformance/tc-mvp-ci-001.json
 python -m build
 pytest tests/
 git diff --check
@@ -267,16 +275,21 @@ disposition during the relevant implementation task.
 
 ## Known gaps or conflicts
 
-- The canonical adapter is implemented but is not enabled, certified, or
-  cross-repository conformant. The former fail-closed placeholder and competing
-  noncanonical target blueprint have been removed.
+- The issue #135 recovery candidate exposes one two-input dispatch adapter and
+  passes all 29 canonical scenarios through the real adapter seam with prohibited
+  effects trapped at zero. It is not yet reviewed/merged, immutably tagged,
+  registry-bound, live-receiver verified, enabled, released, or
+  production-certified.
 - Immutable target capability and mutable operational activation are separate.
   Historical enabled state is not part of Slugger's compatibility pin; the router
   owns and enforces current activation before dispatch. Local implementation and
   conformance must not enable Slugger.
-- The pinned organization baseline supplies executable `TC-MVP-CI-001` inputs and
-  expected results plus the canonical result receiver. Slugger consumes those
-  semantics directly and must not create local substitutes.
+- Recovery candidate
+  `Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a`
+  supplies executable `TC-MVP-CI-001` inputs and expected results plus the planned
+  2.3.1 canonical result receiver. Slugger binds byte-identical shared blobs and
+  its target files in `config/mvp-conformance-pin.json`; it must not redefine
+  their semantics.
 - [Repository context](docs/requirements/RepositoryContext.md) describes backward
   compatibility for declared windows as a general lifecycle responsibility, while
   the current pre-production policy establishes no backward-compatibility
@@ -292,10 +305,13 @@ disposition during the relevant implementation task.
   [assumptions and open questions](docs/requirements/Assumptions.md). Consult the
   owning record rather than copying that backlog here or manufacturing answers.
 
-No organization-contract blocker remains for issue #114 implementation. Exact
-organization-owned schemas, statuses, fixture expectations, receiver semantics,
-identity, ownership, and duplicate behavior remain authoritative at the immutable
-pin and must be consumed rather than redefined.
+No local contract-design decision blocks issue #135 implementation. The remaining
+gates are human review/merge, an immutable adapter tag, registry tag/commit/report
+bindings, publication and live verification of the 2.3.1 receiver, credential
+confirmation, coordinated compatibility release, and one-at-a-time review-state
+validation. Exact organization-owned schemas, statuses, fixture expectations,
+receiver semantics, identity, ownership, and duplicate behavior remain
+authoritative at the immutable pin and must be consumed rather than redefined.
 
 ## Maintenance rule
 

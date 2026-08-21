@@ -77,10 +77,10 @@
 ## ADR-009 — External contracts remain externally owned
 
 **Context:** Sibling implementations are unavailable and local schema copies drift.
-**Decision:** For the next MVP, consume the three canonical schema files directly from `Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e` and map through adapters; unknown major/semantics fail closed. Do not assume a package, tag, floating branch, local copy, or extension.
+**Decision:** For the next MVP, consume the exact canonical schema and fixture blobs from issue #135 recovery candidate `Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a` and map through adapters; unknown major/semantics fail closed. Byte-identical checked-in copies are permitted only as immutable blob-bound validation inputs, never as a local schema fork. Do not assume a package, floating branch, or extension.
 **Alternatives:** Copy schema/enums; infer fields from workflows.
 **Tradeoffs:** External availability/version coordination; preserves ownership.
-**Consequences:** Release 2.2.0 and `ai-sdlc-contract/v2` are the interface baseline. Immutable capability does not encode current activation; the router owns mutable activation before dispatch.
+**Consequences:** The expected 2.3.1 recovery and `ai-sdlc-contract/v2` are the interface baseline. Historical `c6090e5bbadcc2102a1cb91875466e9decdada1e` remains unchanged; the final release is unpublished. Immutable capability does not encode current activation; the router owns mutable activation before dispatch.
 **Open questions:** Future artifact/package publication and compatibility-window policy are organization-owned.
 
 ## ADR-010 — Experimental capabilities are quarantined
@@ -120,6 +120,20 @@
 ## ADR-014 — Hermetic conformance gates external-interface changes
 
 **Context:** Real Codex and GitHub effects are unsafe, nondeterministic, and credential-dependent in normal CI.
-**Decision:** A merge-blocking suite will use the release-2.2.0 schemas and `TC-MVP-CI-001` manifest at the full immutable SHA, plus deterministic caller, executor, repository, publisher, clock, and result-sink fakes. Network/Codex and real GitHub mutations are prohibited.
-**Consequences:** Local cases may extend but not redefine the external contract. The executable manifest inputs and expected results are the conformance oracle; local cases may extend but not redefine them.
+**Decision:** A merge-blocking suite uses the exact recovery-candidate schemas and `TC-MVP-CI-001` v2.3.0 files at the full immutable SHA, plus deterministic caller, executor, repository, publisher, clock, and result-sink fakes. Network/Codex and real GitHub mutations are prohibited.
+**Consequences:** The checked-in report executes all 29 shared scenarios; 22 invoke the real target adapter seam and all ten prohibited-effect counters remain zero. Local cases may extend but not redefine the external contract or oracle.
 **Open questions:** The required Slugger check name remains an implementation/branch-protection coordination detail.
+
+## ADR-015 — Dynamic dispatch and receiver trust remain separate boundaries
+
+**Context:** The router dynamically selects a target with `gh workflow run`, while the former Slugger entry point exposed only `workflow_call`. The former receiver contract also placed organization trust policy at the caller boundary.
+**Decision:** The sole active target workflow exposes only `workflow_dispatch` with exactly `execution_input_json` and `concurrency_group`. Trusted-journal-author policy is immutable organization-owned configuration. The target passes only the narrowly scoped result-delivery credential to the planned `ai-sdlc-v2.3.1` receiver.
+**Consequences:** Target invocation is constructible, target code cannot choose receiver trust, and Codex/publication credentials never cross into result delivery. The receiver tag still requires publication and live verification; no target is enabled by this decision.
+**Open questions:** Protected environment and credential configuration remain repository/organization administrator gates.
+
+## ADR-016 — Conformance evidence uses non-recursive immutable identities
+
+**Context:** Requiring a report to contain the SHA of the commit that contains the report is impossible because changing the report changes that commit.
+**Decision:** Bind exact shared and target Git blob identities in a canonical pin whose revision excludes only its own revision field. Put that non-recursive revision in the report. Later verify adapter tag-to-commit and report digest separately in the organization registry.
+**Consequences:** Evidence is constructible before the final commit while still proving exact adapter inputs. The report never predicts its containing commit, and a tag/release remains a distinct reviewed gate.
+**Open questions:** None block local deterministic evidence generation.
