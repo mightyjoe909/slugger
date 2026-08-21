@@ -129,6 +129,7 @@ def managed(value: dict[str, Any], *, digest: str | None = None) -> dict[str, An
         "url": "https://github.com/Young-Consultations/slugger/pull/7",
         "state": "OPEN",
         "draft": True,
+        "base": "main",
         "digest": digest or canonical_digest(value),
     }
 
@@ -249,6 +250,14 @@ def test_idempotency_and_create_race() -> None:
     reused = execute(value, FakeEffects(found=[managed(value)]))
     require(
         reused["execution_status"] == "duplicate-reused", "managed draft was not reused"
+    )
+    retargeted = managed(value)
+    retargeted["base"] = "release"
+    retargeted_result = execute(value, FakeEffects(found=[retargeted]))
+    require(
+        retargeted_result["execution_status"] == "ambiguous-rejected"
+        and retargeted_result["failure_category"] == "publication",
+        "managed draft retargeted away from the default branch was reused",
     )
     conflict = execute(value, FakeEffects(found=[managed(value, digest="0" * 64)]))
     require(

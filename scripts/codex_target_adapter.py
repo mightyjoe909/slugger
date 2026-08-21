@@ -63,6 +63,7 @@ class Ownership:
 
     branch_exists: bool
     pull_requests: list[dict[str, Any]]
+    default_branch: str = "main"
 
 
 def canonical_digest(payload: dict[str, Any]) -> str:
@@ -199,6 +200,12 @@ def reconcile_ownership(snapshot: Ownership, digest: str) -> dict[str, Any] | No
         raise AdapterError(
             "authorization",
             "Delivery ID is already bound to a different payload",
+            "ambiguous-rejected",
+        )
+    if any(item.get("base") != snapshot.default_branch for item in owned):
+        raise AdapterError(
+            "publication",
+            "Managed pull request does not target the repository default branch",
             "ambiguous-rejected",
         )
     if len(owned) > 1 or any(
@@ -430,6 +437,13 @@ class GitHubEffects:
     def discover(
         self, branch: str, delivery_id: str, timeout_seconds: float
     ) -> Ownership:
+        default_branch = self._gh(
+            "api",
+            f"repos/{TARGET}",
+            "--jq",
+            ".default_branch",
+            timeout_seconds=timeout_seconds,
+        ).strip()
         branch_names = self._gh(
             "api",
             "--paginate",
@@ -449,7 +463,7 @@ class GitHubEffects:
             "--head",
             branch,
             "--json",
-            "url,state,isDraft,body",
+            "url,state,isDraft,baseRefName,body",
             timeout_seconds=timeout_seconds,
         )
         found = []
@@ -464,6 +478,7 @@ class GitHubEffects:
                         "url": pr["url"],
                         "state": pr["state"],
                         "draft": pr["isDraft"],
+                        "base": pr["baseRefName"],
                         "digest": match.group(1),
                     }
                 )
@@ -473,10 +488,15 @@ class GitHubEffects:
                         "url": pr["url"],
                         "state": pr["state"],
                         "draft": pr["isDraft"],
+                        "base": pr["baseRefName"],
                         "digest": "conflict",
                     }
                 )
-        return Ownership(branch_exists=branch_exists, pull_requests=found)
+        return Ownership(
+            branch_exists=branch_exists,
+            pull_requests=found,
+            default_branch=default_branch,
+        )
 
     def codex(self, instructions: str, timeout_seconds: float) -> None:
         prompt = "\n\n".join(

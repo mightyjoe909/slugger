@@ -240,6 +240,7 @@ def _managed(payload: dict[str, Any], *, digest: str | None = None) -> dict[str,
         "url": "https://github.com/Young-Consultations/slugger/pull/7",
         "state": "OPEN",
         "draft": True,
+        "base": "main",
         "digest": digest or canonical_digest(payload),
     }
 
