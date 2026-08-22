@@ -16,7 +16,7 @@ Each record is atomic at the product-behavior level. “Input” and “output�
 **Vision:** VG-01, VG-02, VG-07.
 
 ### FR-INT-02 — Authenticate and authorize the admitted caller
-**Description:** Slugger SHALL authenticate and authorize the router-admitted caller, require an enabled registered Slugger target, permitted mode/task type, and draft-only policy before execution. Slugger SHALL NOT recheck a live source label or require a second approval record.
+**Description:** Slugger SHALL authenticate and authorize the router-admitted caller, require the exact registered Slugger target, permitted mode/task type, and draft-only policy before execution. Mutable activation is enforced by the router before dispatch and is not re-evaluated by the target. Slugger SHALL NOT recheck a live source label or require a second approval record.
 **Rationale:** Stale or local signals cannot authorize consequential action. **Priority:** P0. **Dependencies:** Interface-portfolio-tasks; Interface-organization-github.  
 **Inputs:** authenticated routed request and local policy. **Outputs:** authorization decision/evidence. **Preconditions:** request passed structural validation. **Postconditions:** unauthorized work has no generation or target mutation.
 **Acceptance:** **AC-INT-02a:** unauthorized caller blocks locally before execution; router-owned disabled activation prevents dispatch. **AC-INT-02b:** `ai-sdlc-approved`, another label, and a second target approval are neither required nor authoritative. **AC-INT-02c:** verification mode causes no provider call or repository mutation.

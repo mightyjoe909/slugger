@@ -1,9 +1,11 @@
 # Shared-contract orchestration — next-MVP target slice
 
-[`docs/next-mvp.md`](next-mvp.md) is the normative Slugger baseline. The immutable
-compatibility unit is organization release 2.2.0,
-`Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e`, contract
-payload `ai-sdlc-contract/v2`, and executable fixture oracle `TC-MVP-CI-001`.
+[`docs/next-mvp.md`](next-mvp.md) is the normative Slugger baseline. The reviewed
+issue #135 recovery candidate is
+`Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a`,
+contract payload `ai-sdlc-contract/v2`, and executable fixture oracle
+`TC-MVP-CI-001` v2.3.0. The final 2.3.1 release remains unpublished; historical
+baseline `c6090e5bbadcc2102a1cb91875466e9decdada1e` is unchanged.
 
 The reusable target entry point accepts required strings `execution_input_json`
 (the complete canonical execution-input object) and `concurrency_group` (transport
@@ -11,11 +13,12 @@ concurrency identity). `delivery_id`, not the concurrency group or an Actions ru
 ID, is the idempotency and deterministic ownership identity. At-least-once retries
 preserve it. A changed payload under an existing delivery ID is rejected.
 
-Canonical task, execution-input, and execution-result schemas are consumed directly
-from `contracts/task-contract.schema.json`, `contracts/execution-input.schema.json`,
-and `contracts/execution-result.schema.json` at the full SHA above. No package,
-floating reference, local schema, enum, fork, or compatibility-derived activation
-state is part of the MVP target interface.
+Canonical task, execution-input, and execution-result schemas plus all three shared
+fixture files are checked in byte-identically for hermetic validation. Their exact
+upstream Git blob identities and the exact target wrapper/adapter/test files are
+bound by `config/mvp-conformance-pin.json`. No package, floating reference, local
+schema semantics, enum, fork, or compatibility-derived activation state is part of
+the MVP target interface.
 
 Immutable compatibility defines protocol and target-capability semantics. Mutable
 activation is separate organization control-plane state enforced by the router
@@ -30,7 +33,9 @@ on ambiguity, and requeries after a create race. Verify mode has no Codex, branc
 PR, or publication effect.
 
 Slugger sends canonical results separately to
-`Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@c6090e5bbadcc2102a1cb91875466e9decdada1e`.
+`Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@ai-sdlc-v2.3.1`.
+That planned tag still requires publication and live verification. Receiver trust
+policy remains organization-owned; the target supplies only `CODEX_RESULT_TOKEN`.
 Acknowledgement is transport state, not execution success. Result credentials are
 isolated from Codex and target publication; identical redelivery is safe and a
 conflicting result fails closed. Slugger does not create a competing receiver.
@@ -39,4 +44,5 @@ conflicting result fails closed. Slugger does not create a competing receiver.
 that oracle without redefining its semantics and keeps genuinely local target-policy
 tests separate. Normal conformance CI injects fakes and makes no real Codex call,
 branch, commit, push, pull request, or receiver mutation. Passing local conformance
-does not activate the target.
+does not activate the target. The checked-in report passes all 29 scenarios, invokes
+the real adapter seam in 22, and records zero for all ten prohibited-effect counters.

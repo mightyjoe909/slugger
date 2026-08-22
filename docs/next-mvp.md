@@ -1,35 +1,44 @@
 # Slugger organization next-MVP target adapter
 
-**Status:** the target adapter is implemented against this interface baseline but is
-not enabled or certified. This document is authoritative for Slugger's current
-organization-MVP slice. The broader product vision remains in [`VISION.md`](VISION.md).
+**Status:** the issue #135 recovery candidate is implemented with complete local
+zero-effect conformance evidence, but is not reviewed/merged, immutably tagged,
+registry-bound, enabled, live-receiver verified, released, or production-certified.
+This document is authoritative for Slugger's current organization-MVP slice. The
+broader product vision remains in [`VISION.md`](VISION.md).
 
 ## Immutable compatibility unit
 
-Slugger aligns its interface to organization release **2.2.0**, contract payload
-version **`ai-sdlc-contract/v2`**, and fixture set **`TC-MVP-CI-001`** at this exact
+Slugger aligns its interface to the reviewed issue #135 recovery candidate for
+expected compatibility release **2.3.1**, contract payload version
+**`ai-sdlc-contract/v2`**, and fixture set **`TC-MVP-CI-001` v2.3.0** at this exact
 immutable reference:
 
 ```text
-Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e
+Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a
 ```
 
-The authoritative release manifest, compatibility and release documentation,
-registry, router, receiver, schemas, and fixture manifest are external facts
-supplied for this alignment; they were not inspected from this repository. Slugger
-therefore makes no cross-repository conformance claim.
+The historical reviewed baseline
+`Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e`
+remains unchanged. The final 2.3.1 tag/release is not yet published. Mutable
+activation remains separate from this compatibility repair.
 
-The canonical schemas are consumed directly from these immutable files; summaries
-in Slugger documentation are subordinate to them:
+The canonical schemas and executable fixtures are organization-owned. Slugger
+checks in byte-identical copies only for hermetic validation and binds their
+upstream Git blob identities together with exact target files in
+`config/mvp-conformance-pin.json`. Those copies and local summaries are subordinate
+to the organization-owned source:
 
 ```text
-https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/task-contract.schema.json
-https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-input.schema.json
-https://raw.githubusercontent.com/Young-Consultations/.github/c6090e5bbadcc2102a1cb91875466e9decdada1e/contracts/execution-result.schema.json
+contracts/task-contract.schema.json
+contracts/execution-input.schema.json
+contracts/execution-result.schema.json
+tests/fixtures/mvp-v2/manifest.json
+tests/fixtures/mvp-v2/scenarios.json
+tests/fixtures/mvp-v2/expected-results.json
 ```
 
-There is no assumed published package, no `ai-sdlc-v2.2.0` tag, no `main`
-reference, and no Slugger-owned fork, extension, enum, or replacement schema.
+There is no assumed package, no `main` compatibility reference, and no
+Slugger-owned fork, extension, enum, or replacement schema.
 
 ## Narrow responsibility and requirements
 
@@ -98,10 +107,10 @@ does **not** re-read the live source issue, re-evaluate activation, require
 `ai-sdlc-approved`, require a second approval record, or act as an approval authority.
 Rich approval provenance is explicitly deferred to v3.
 
-## Exact reusable-workflow input
+## Exact target-workflow input
 
-The eventual reusable workflow is `.github/workflows/codex-execute.yml`. Its exact
-target interface has two required string inputs:
+The target workflow is `.github/workflows/codex-execute.yml`. It exposes only
+`workflow_dispatch` and has exactly two required string inputs:
 
 | Input | Meaning |
 |---|---|
@@ -161,11 +170,16 @@ operations.
 
 ## Canonical result-receiver interface
 
-The compatibility baseline pins the implemented canonical receiver at:
+The recovery candidate plans the canonical receiver at:
 
 ```text
-Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@c6090e5bbadcc2102a1cb91875466e9decdada1e
+Young-Consultations/.github/.github/workflows/codex-result-receiver.yml@ai-sdlc-v2.3.1
 ```
+
+That tag is not yet published; live receiver verification remains a release gate.
+Receiver trusted-journal-author policy is immutable organization-owned
+configuration. Slugger supplies only the narrowly scoped `CODEX_RESULT_TOKEN` at
+this boundary.
 
 | Direction | Name |
 |---|---|
@@ -189,7 +203,7 @@ the already determined execution result for safe redelivery.
 
 ## No-Codex conformance
 
-Normal CI will use a fake executor and fake publisher, no Codex credential or
+Normal CI uses a fake executor and fake publisher, no Codex credential or
 network call, and no real branch, commit, push, or PR. Cases consume the executable
 inputs and expected results from the authoritative `TC-MVP-CI-001` manifest scenario names and coverage:
 
@@ -210,6 +224,11 @@ duplicate-delivery behavior. Slugger-specific policy tests remain separate from
 organization contract conformance. Normal conformance CI uses dependency-injected
 fakes and makes no real Codex call, branch, commit, push, pull request, or receiver
 mutation.
+
+The checked-in report executes all 29 organization scenarios; 22 invoke the real
+repository adapter seam. Every Codex, branch, commit, push, pull-request, merge,
+release, deployment, production, and secret-output counter is zero. The report
+does not request activation or claim production readiness.
 
 ## State, sequence, security, and failures
 
@@ -234,15 +253,11 @@ ambiguous ownership, and receiver rejection all fail closed.
 
 ## External dependencies, limitations, and readiness
 
-The organization-owned schemas, target capabilities, router, executable fixture
-oracle, result semantics, receiver, and trust boundaries are complete at the pinned
-compatibility revision. Mutable activation remains deliberately outside that
-immutable unit and outside Slugger authority. Local implementation and conformance
-evidence do not enable the target.
-
-No additional Slugger-owned requirement or architecture decision is needed before
-implementation. The fail-closed placeholder has been replaced in place by one canonical adapter;
-no disabled legacy path or compatibility shim is retained.
-Slugger is **ready for the issue #114 implementation task** against this baseline.
-It is not enabled or certified merely because local implementation or conformance
-succeeds.
+The repository-owned adapter and deterministic no-effects evidence are implemented.
+Acceptance still requires human review/merge, an immutable `codex-adapter-v*` tag,
+registry tag/commit/report bindings, the published and live-verified 2.3.1
+receiver, credential confirmation, the final compatibility release, and
+one-at-a-time review-state compatibility validation. Mutable activation remains
+outside this immutable unit and outside Slugger authority. Local implementation
+and conformance evidence do not enable the target or establish production
+readiness.

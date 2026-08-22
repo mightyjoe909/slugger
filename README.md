@@ -8,31 +8,35 @@ required reading order and implementation policy.
 ## Current next-MVP status
 
 The one current target is the organization next-MVP adapter described by
-[`docs/next-mvp.md`](docs/next-mvp.md). It will accept the pinned organization
-release 2.2.0 `ai-sdlc-contract/v2` request, execute only an authorized task in this
-repository, produce at most one validated managed draft pull request, and send one
-canonical result.
+[`docs/next-mvp.md`](docs/next-mvp.md). It accepts the pinned organization
+recovery-candidate `ai-sdlc-contract/v2` request, execute only an authorized task
+in this repository, produce at most one validated managed draft pull request, and
+send one canonical result.
 
-**The adapter is implemented but is not enabled, certified, or live.** The merged
-organization baseline now supplies the immutable compatibility/capability contract,
-executable fixture oracle, and canonical result receiver. Current target activation
-is separate mutable control-plane state enforced by the organization router;
-Slugger neither records nor enforces historical enabled state. The single `.github/workflows/codex-execute.yml` now provides the canonical
-admission, verify, implement, managed-draft, and result-delivery path; there is no
-parallel disabled adapter. There is currently no supported local CLI, manual Codex demo, publication,
-certification, release, or full-SDLC execution path.
+**The issue #135 adapter candidate is implemented and locally conformant, but is
+not tagged, enabled, live-receiver verified, released, or production-certified.**
+Current target activation is separate mutable control-plane state enforced by the
+organization router; Slugger neither records nor enforces historical enabled
+state. The single `.github/workflows/codex-execute.yml` now provides the canonical
+dispatch, admission, verify, implement, managed-draft, and result-delivery path;
+there is no parallel target adapter. There is currently no supported local CLI,
+manual Codex demo, publication, certification, release, or full-SDLC execution
+path.
 
 The immutable external compatibility unit is:
 
 ```text
-Young-Consultations/.github@c6090e5bbadcc2102a1cb91875466e9decdada1e
+Young-Consultations/.github@e27b8a541afbd27b4be5606a19ffa43637ad312a
 contract: ai-sdlc-contract/v2
-fixture manifest: TC-MVP-CI-001
+fixture manifest: TC-MVP-CI-001 v2.3.0 (29 scenarios)
 ```
 
-Canonical schemas remain owned by the organization control plane and are not copied
-into this repository. See [`docs/shared-contract-orchestration.md`](docs/shared-contract-orchestration.md)
-for the subordinate integration summary.
+Canonical schemas and fixtures remain owned by the organization control plane.
+The byte-identical copies checked in here are offline validation inputs bound to
+their upstream Git blob identities; they are not a local fork. See
+[`docs/shared-contract-orchestration.md`](docs/shared-contract-orchestration.md)
+for the subordinate integration summary and
+`.ai-sdlc/conformance/tc-mvp-ci-001.json` for zero-effect evidence.
 
 ## Repository contents
 
