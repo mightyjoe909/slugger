@@ -26,6 +26,7 @@ def test_evidence_pin_binds_exact_shared_and_target_files() -> None:
         Path("config/mvp-conformance-pin.json").read_text(encoding="utf-8")
     )
     assert validate_pin(pin) == []
+    assert "scripts/run_tc_mvp_ci_001.py" in pin["target_files"]
     for relative, expected in EXPECTED_COMPATIBILITY_BLOBS.items():
         assert git_blob_sha1(Path(relative).read_bytes()) == expected
     report = json.loads(
