@@ -1,7 +1,7 @@
 {
   "report_version": "1.0",
   "repository": "Young-Consultations/slugger",
-  "adapter_revision": "sha256:24c780f94cdc72eed80113ccca00020e296911d7bda66b9e01c7c7afff7a0caf",
+  "adapter_revision": "sha256:9dc5c57580741f60d3391436d1dcae09e4eaa3b7c1449988f2a98acdfbac3df8",
   "compatibility_sha": "e27b8a541afbd27b4be5606a19ffa43637ad312a",
   "fixture_set": "TC-MVP-CI-001",
   "fixture_version": "2.3.0",
